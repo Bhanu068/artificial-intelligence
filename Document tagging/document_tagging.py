@@ -28,7 +28,7 @@ from sklearn.ensemble import RandomForestRegressor
 import torch
 import pickle
 
-# Unzipping the data file
+# Unzipping the data file ( Change the path of the file as per your requirements)
 !unzip '/content/drive/MyDrive/Colab Datasets/Document Tagging.zip'
 
 # Paths for the respective files
@@ -111,7 +111,7 @@ model = Seq2SeqModel(encoder_decoder_type="bart",
                     encoder_decoder_name="facebook/bart-base",
                     args=model_args, use_cuda = False)
 
-# Empty the cache to avoid CUDA ran out of memory issues
+# Empty the cache so that you don't run out of memory
 torch.cuda.empty_cache()
 
 # Train the maodel
@@ -142,7 +142,7 @@ for idx, row in test_df.iterrows():
 
 # Laoding the saved model
 
-model = pickle.load(open('document_tagging.pkl', 'rb'))
+model = pickle.load(open('model_document_tagging.pkl', 'rb'))
 
 # Passing the test_docs dataframe to generate the tags for it
 
@@ -163,7 +163,5 @@ output_df = pd.DataFrame(list(zip(test_df['input_text'], predicted_title)))
 
 output_df.columns = ['Doc', 'Predicted Title']
 
-# Final doc and predicted tag for it
-output_df
-
+# Storing the final doc in csv format
 output_df.to_csv('Predicted tags.csv')
